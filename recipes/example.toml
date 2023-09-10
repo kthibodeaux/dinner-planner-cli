@@ -1,6 +1,6 @@
 name = "Generic Dinner"
 category = "Main"
-include_in_cookbook = false
+include_in_cookbook = true
 source = "My Great Cookbook p.12"
 needs_sides = false
 # default text size is 12, but can be set like so:

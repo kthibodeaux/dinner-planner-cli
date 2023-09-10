@@ -1,5 +1,8 @@
 name = "Generic Dinner"
 category = "Main"
+include_in_cookbook = false
+source = "My Great Cookbook p.12"
+needs_sides = false
 
 ingredients = [
   "Ingredients can be input here",

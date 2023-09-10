@@ -21,6 +21,11 @@ OptionParser.new do |parser|
     @task = :count
   end
 
+  parser.on('--list CATEGORY', 'List recipes for the given category') do |category|
+    @task = :list
+    @category = category
+  end
+
   parser.on('--import FILENAME', 'Load thedinnerplanner JSON and save each recipe as its own TOML file') do |filename|
     @task = :import
     @filename = filename
@@ -41,5 +46,9 @@ when :import
 when :count
   DinnerPlannerCli::Recipe.all.group_by(&:category).each do |category, recipes|
     puts "Category: '#{category}', Recipes: #{recipes.size}"
+  end
+when :list
+  DinnerPlannerCli::Recipe.all.select { |e| e.category.downcase == @category.downcase }.each do |recipe|
+    puts recipe.name
   end
 end

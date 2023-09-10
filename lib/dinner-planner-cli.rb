@@ -1,3 +1,4 @@
+require 'prawn'
 require 'toml'
 
 module DinnerPlannerCli

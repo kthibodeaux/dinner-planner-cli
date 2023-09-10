@@ -13,6 +13,11 @@ OptionParser.new do |parser|
     @filename = filename
   end
 
+  parser.on('--show FILENAME', 'Log FILENAME to the console') do |filename|
+    @task = :show
+    @filename = filename
+  end
+
   parser.on('--cookbook', 'Open all applicable recipes in one PDF') do
     @task = :cookbook
   end
@@ -37,6 +42,10 @@ when :pdf
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file("#{DinnerPlannerCli.folder}/#{@filename}"))
 
   DinnerPlannerCli::Services::OpenPdf.new(recipe).process
+when :show
+  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file("#{DinnerPlannerCli.folder}/#{@filename}"))
+
+  DinnerPlannerCli::Services::PrintToConsole.new(recipe).process
 when :cookbook
   recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
 

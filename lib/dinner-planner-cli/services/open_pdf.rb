@@ -13,17 +13,18 @@ class DinnerPlannerCli::Services::OpenPdf
                                })
       pdf.font 'FiraSans'
 
-      recipes.each_with_index do |recipe, index|
-        pdf.start_new_page unless index.zero?
+      if recipes.size == 1
+        write_recipe(pdf, recipes.first)
+      else
+        recipes.group_by(&:category).sort_by(&:first).each_with_index do |(category, category_recipes), index|
+          pdf.start_new_page unless index.zero?
+          write_category(pdf, category)
 
-        pdf.font_size 20
-        pdf.text recipe.name
-        pdf.stroke_horizontal_rule
+          category_recipes.each_with_index do |recipe, _index|
+            pdf.start_new_page
 
-        write_group(pdf, recipe.ingredients, recipe.steps)
-
-        recipe.groups.each do |_, group|
-          write_group(pdf, group['ingredients'], group['steps'], group['name'])
+            write_recipe(pdf, recipe)
+          end
         end
       end
     end
@@ -35,6 +36,25 @@ class DinnerPlannerCli::Services::OpenPdf
   private
 
   attr_reader :recipes
+
+  def write_category(pdf, name)
+    pdf.move_down 100
+    pdf.font_size 32
+    pdf.text name
+    pdf.stroke_horizontal_rule
+  end
+
+  def write_recipe(pdf, recipe)
+    pdf.font_size 20
+    pdf.text recipe.name
+    pdf.stroke_horizontal_rule
+
+    write_group(pdf, recipe.ingredients, recipe.steps)
+
+    recipe.groups.each do |_, group|
+      write_group(pdf, group['ingredients'], group['steps'], group['name'])
+    end
+  end
 
   def write_group(pdf, ingredients, steps, name = nil)
     ingredients_title = name ? "#{name} Ingredients" : 'Ingredients'

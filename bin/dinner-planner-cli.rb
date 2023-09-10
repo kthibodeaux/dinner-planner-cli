@@ -4,19 +4,34 @@ require 'dinner-planner-cli'
 require 'optparse'
 
 OptionParser.new do |parser|
-  parser.on('-s', '--show FILENAME', 'Open FILENAME as a PDF') do |filename|
-    recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(filename))
+  parser.on('--path PATH', 'Use PATH as the recipes folder') do |pathname|
+    DinnerPlannerCli.set_folder pathname
+  end
 
-    DinnerPlannerCli::Services::OpenPdf.new(recipe).process
+  parser.on('-s', '--show FILENAME', 'Open FILENAME as a PDF') do |filename|
+    @task = :show
+    @filename = filename
   end
 
   parser.on('--cookbook', 'Open all applicable recipes in one PDF') do
-    recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
-
-    DinnerPlannerCli::Services::OpenPdf.new(recipes).process
+    @task = :cookbook
   end
 
   parser.on('--import FILENAME', 'Load thedinnerplanner JSON and save each recipe as its own TOML file') do |filename|
-    DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: filename).process
+    @task = :import
+    @filename = filename
   end
 end.parse!
+
+case @task
+when :show
+  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(@filename))
+
+  DinnerPlannerCli::Services::OpenPdf.new(recipe).process
+when :cookbook
+  recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
+
+  DinnerPlannerCli::Services::OpenPdf.new(recipes).process
+when :import
+  DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: @filename).process
+end

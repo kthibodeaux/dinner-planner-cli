@@ -31,7 +31,7 @@ class DinnerPlannerCli::Services::TheDinnerPlannerComImport
 
       toml_filename = "#{recipe['name'].downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.toml"
 
-      File.open("recipes/#{toml_filename}", 'w') do |f|
+      File.open("#{DinnerPlannerCli.folder}/#{toml_filename}", 'w') do |f|
         f.puts TOML::Generator.new(recipe).body
       end
     end

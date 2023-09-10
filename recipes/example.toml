@@ -7,6 +7,10 @@ needs_sides = false
 ingredients = [
   "Ingredients can be input here",
   "as an array.",
+  "Use the following format",
+  "14 oz can; Diced Tomatoes (do not drain)",
+  "quantity; name (optional notes)",
+  "quantity; name",
 ]
 
 steps = [

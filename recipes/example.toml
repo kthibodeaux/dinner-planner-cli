@@ -1,33 +1,42 @@
-name = "Pork and Sausage Gravy"
+name = "Generic Dinner"
 category = "Main"
 
 ingredients = [
-  "1lb; Pork Roast (cubed)",
-  "1/2lb; Sausage (sliced)",
-  "1 medium; Yellow Onion (finely chopped)",
-  "1 medium; Bell Pepper (finely chopped)",
-  "2; Celery (stalks - finely chopped)",
-  "1 cup; Green Onion (chopped)",
-  "3; Large Potato (cubed)",
-  "1 Tbsp; Cajun Seasoning",
-  "1 tsp; Kosher Salt",
-  "1 tsp; Black Pepper",
-  "1 tsp; Paprika",
-  "1 tsp; Dried Thyme",
-  "4 cup; Chicken Stock",
+  "Ingredients can be input here",
+  "as an array.",
 ]
 
 steps = [
-  "Prepare vegetables and set aside",
-  "Brown the pork",
-  "Remove pork from pot and set aside",
-  "Brown white onion, bell pepper, and celery",
-  "Add some chicken stock to pot and deglaze",
-  "Add pork, sausage, green onion, and potatoes to the pot",
-  "Add remaining chicken stock until contents of pot are submerged (about 4 cups, add water to top it off if that is not enough chicken stock)",
-  "Add cajun seasoning, paprika, thyme to pot and bring to a boil",
-  "Once boiling, turn heat to low and cover",
-  "Cook for 1 1/2 to 2 hours on low, stirring frequently.",
-  "Salt and pepper to taste",
-  "Serve over rice",
+  "Steps can be input here",
+  "as an array.",
+]
+
+[groups.sauce]
+name = "Sauce"
+
+ingredients = [
+  "For recipes that break steps apart",
+  "special ingredients can be input here",
+  "as an array.",
+]
+
+steps = [
+  "For recipes that break steps apart",
+  "special steps can be input here",
+  "as an array.",
+]
+
+[groups.bread]
+name = "Bread"
+
+ingredients = [
+  "For recipes that break steps apart",
+  "special ingredients can be input here",
+  "as an array.",
+]
+
+steps = [
+  "For recipes that break steps apart",
+  "special steps can be input here",
+  "as an array.",
 ]

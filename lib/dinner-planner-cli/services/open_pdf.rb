@@ -20,26 +20,11 @@ class DinnerPlannerCli::Services::OpenPdf
         pdf.text recipe.name
         pdf.stroke_horizontal_rule
 
-        if recipe.ingredients.any?
-          pdf.move_down 20
-          pdf.font_size 14
-          pdf.text 'Ingredients'
-          pdf.move_down 5
-          pdf.font_size 12
-          recipe.ingredients.each do |ingredient|
-            pdf.text ingredient
-          end
-        end
+        write_group(pdf, recipe.ingredients, recipe.steps)
 
-        next unless recipe.steps.any?
-
-        pdf.move_down 20
-        pdf.font_size 14
-        pdf.text 'Steps'
-        pdf.move_down 5
-        pdf.font_size 12
-        recipe.steps.each do |step|
-          pdf.text step
+        recipe.groups.each do |_, group|
+          puts group.inspect
+          write_group(pdf, group['ingredients'], group['steps'], group['name'])
         end
       end
     end
@@ -51,4 +36,31 @@ class DinnerPlannerCli::Services::OpenPdf
   private
 
   attr_reader :recipes
+
+  def write_group(pdf, ingredients, steps, name = nil)
+    ingredients_title = name ? "#{name} Ingredients" : 'Ingredients'
+    steps_title = name ? "#{name} Steps" : 'Steps'
+
+    if ingredients.any?
+      pdf.move_down 20
+      pdf.font_size 14
+      pdf.text ingredients_title
+      pdf.move_down 5
+      pdf.font_size 12
+      ingredients.each do |ingredient|
+        pdf.text ingredient
+      end
+    end
+
+    return unless steps.any?
+
+    pdf.move_down 20
+    pdf.font_size 14
+    pdf.text steps_title
+    pdf.move_down 5
+    pdf.font_size 12
+    steps.each do |step|
+      pdf.text step
+    end
+  end
 end

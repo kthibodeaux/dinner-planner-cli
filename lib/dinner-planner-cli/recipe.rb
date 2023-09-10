@@ -41,6 +41,10 @@ class DinnerPlannerCli::Recipe
     toml['include_in_cookbook']
   end
 
+  def groups
+    Array(toml['groups'])
+  end
+
   private
 
   attr_reader :toml

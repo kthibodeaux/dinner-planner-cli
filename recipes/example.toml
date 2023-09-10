@@ -3,6 +3,8 @@ category = "Main"
 include_in_cookbook = false
 source = "My Great Cookbook p.12"
 needs_sides = false
+# default text size is 12, but can be set like so:
+# text_size = 10
 
 ingredients = [
   "Ingredients can be input here",

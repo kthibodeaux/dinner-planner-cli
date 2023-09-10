@@ -1,4 +1,8 @@
-class DinnerPlannerCli::Services::OpenCookbookPdf
+class DinnerPlannerCli::Services::OpenPdf
+  def initialize(recipes)
+    @recipes = Array(recipes)
+  end
+
   def process
     Prawn::Document.generate('temp.pdf') do |pdf|
       pdf.font_families.update('FiraSans' => {
@@ -9,7 +13,7 @@ class DinnerPlannerCli::Services::OpenCookbookPdf
                                })
       pdf.font 'FiraSans'
 
-      DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?).each_with_index do |recipe, index|
+      recipes.each_with_index do |recipe, index|
         pdf.start_new_page unless index.zero?
 
         pdf.font_size 20
@@ -38,9 +42,13 @@ class DinnerPlannerCli::Services::OpenCookbookPdf
           pdf.text step
         end
       end
-
-      `xdg-open temp.pdf`
-      `rm temp.pdf`
     end
+
+    `xdg-open temp.pdf`
+    `rm temp.pdf`
   end
+
+  private
+
+  attr_reader :recipes
 end

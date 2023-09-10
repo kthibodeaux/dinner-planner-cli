@@ -35,10 +35,6 @@ class DinnerPlannerCli::Recipe
     toml['source']
   end
 
-  def needs_sides?
-    toml['needs_sides']
-  end
-
   def include_in_cookbook?
     toml['include_in_cookbook']
   end

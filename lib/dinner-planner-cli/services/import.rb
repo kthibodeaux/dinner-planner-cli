@@ -23,7 +23,6 @@ class DinnerPlannerCli::Services::TheDinnerPlannerComImport
                            end
       end
 
-      recipe['needs_sides'] = true if raw['needsSides']
       recipe['include_in_cookbook'] = true if raw['isPublic']
 
       recipe['ingredients'] = raw['ingredients'] if raw['ingredients'].any?

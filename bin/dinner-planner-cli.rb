@@ -8,8 +8,8 @@ OptionParser.new do |parser|
     DinnerPlannerCli.set_folder pathname
   end
 
-  parser.on('-s', '--show FILENAME', 'Open FILENAME as a PDF') do |filename|
-    @task = :show
+  parser.on('--pdf FILENAME', 'Open FILENAME as a PDF') do |filename|
+    @task = :pdf
     @filename = filename
   end
 
@@ -33,7 +33,7 @@ OptionParser.new do |parser|
 end.parse!
 
 case @task
-when :show
+when :pdf
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file("#{DinnerPlannerCli.folder}/#{@filename}"))
 
   DinnerPlannerCli::Services::OpenPdf.new(recipe).process

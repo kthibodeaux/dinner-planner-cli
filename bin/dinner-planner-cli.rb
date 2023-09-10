@@ -8,6 +8,10 @@ OptionParser.new do |parser|
     DinnerPlannerCli::Services::OpenRecipePdf.new(filename: filename).process
   end
 
+  parser.on('--cookbook', 'Open all applicable recipes in one PDF') do
+    DinnerPlannerCli::Services::OpenCookbookPdf.new.process
+  end
+
   parser.on('--import FILENAME', 'Load thedinnerplanner JSON and save each recipe as its own TOML file') do |filename|
     DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: filename).process
   end

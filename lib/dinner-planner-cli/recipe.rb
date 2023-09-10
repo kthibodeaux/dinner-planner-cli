@@ -1,4 +1,12 @@
 class DinnerPlannerCli::Recipe
+  def self.all
+    Dir
+      .entries('recipes')
+      .reject { |e| ['.', '..', '.gitkeep'].include?(e) }
+      .map { |e| new(toml: TOML.load_file("recipes/#{e}")) }
+      .sort_by(&:name)
+  end
+
   def initialize(toml:)
     @toml = toml
   end
@@ -8,11 +16,11 @@ class DinnerPlannerCli::Recipe
   end
 
   def ingredients
-    toml['ingredients'].map { |e| e.gsub('; ', ' ') }
+    Array(toml['ingredients']).map { |e| e.gsub('; ', ' ') }
   end
 
   def steps
-    toml['steps'].map.with_index(1) do |step, index|
+    Array(toml['steps']).map.with_index(1) do |step, index|
       "#{index}. #{step}"
     end
   end

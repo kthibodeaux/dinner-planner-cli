@@ -1,0 +1,26 @@
+name = "Ground Beef Nachos/Tacos"
+category = "Main"
+
+ingredients = [
+  "2lb; Ground Beef",
+  "1; White Onion (diced)",
+  "1; Bell Pepper (diced)",
+  "2; Tbsp Taco Seasoning Mix",
+  "1; 16oz Can Refried Beans",
+  "Diced Pickled Jalapenos",
+  "8oz; Cheddar Cheese (grated)",
+  "8oz; Pepperjack Cheese (grated)",
+  "Tortilla Chips",
+  "Sour Cream",
+]
+
+steps = [
+  "Preheat oven to 375.",
+  "Dice bell pepper and set aside.",
+  "Grate cheeses, mix, and set aside.",
+  "Saute onion in skillet then add beef and cook until no pink remains.",
+  "Once the beef is cooked, add the can of refried beans and taco seasoning and stir to combine.",
+  "Once the beans are soft, about 2 minutes, remove from heat.",
+  "Layer chips on a large pan. Add meat/bean mixture to chips, then add the cheese. Finally top with bell pepper and jalapenos.",
+  "Bake until chips are hot and cheese is melted, about 8 minutes.",
+]

@@ -33,6 +33,7 @@ class DinnerPlannerCli::Recipe
     end
 
     `xdg-open temp.pdf`
+    `rm temp.pdf`
   end
 
   private

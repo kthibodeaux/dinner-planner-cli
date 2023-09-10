@@ -18,6 +18,11 @@ OptionParser.new do |parser|
     @filename = filename
   end
 
+  parser.on('--new FILENAME', 'Create FILENAME with template and open for editing') do |filename|
+    @task = :new
+    @filename = filename
+  end
+
   parser.on('--cookbook', 'Open all applicable recipes in one PDF') do
     @task = :cookbook
   end
@@ -60,4 +65,6 @@ when :list
   DinnerPlannerCli::Recipe.all.select { |e| e.category.downcase == @category.downcase }.each do |recipe|
     puts recipe.name
   end
+when :new
+  DinnerPlannerCli::Services::NewRecipe.new(filename: @filename).process
 end

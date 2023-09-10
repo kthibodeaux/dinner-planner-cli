@@ -4,7 +4,7 @@ class DinnerPlannerCli::Services::NewRecipe
   end
 
   def process
-    File.open(full_filepath, 'w') do |f|
+    File.open(filepath, 'w') do |f|
       f.puts <<~EOF
         name = ""
         category = "Main"
@@ -23,18 +23,18 @@ class DinnerPlannerCli::Services::NewRecipe
       EOF
     end
 
-    system("$EDITOR \"#{full_filepath}\"")
+    system("$EDITOR \"#{filepath}\"")
   end
 
   private
 
   attr_reader :filename
 
-  def full_filepath
+  def filepath
     if filename.end_with?('.toml')
-      "#{DinnerPlannerCli.folder}/#{filename}"
+      filename
     else
-      "#{DinnerPlannerCli.folder}/#{filename}.toml"
+      "#{filename}.toml"
     end
   end
 end

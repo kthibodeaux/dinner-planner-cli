@@ -1,8 +1,9 @@
 require 'json'
 
 class DinnerPlannerCli::Services::TheDinnerPlannerComImport
-  def initialize(filename:)
+  def initialize(filename:, path:)
     @filename = filename
+    @path = path
   end
 
   def process
@@ -29,7 +30,7 @@ class DinnerPlannerCli::Services::TheDinnerPlannerComImport
 
       toml_filename = "#{recipe['name'].downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.toml"
 
-      File.open("#{DinnerPlannerCli.folder}/#{toml_filename}", 'w') do |f|
+      File.open("#{path}/#{toml_filename}", 'w') do |f|
         f.puts TOML::Generator.new(recipe).body
       end
     end
@@ -37,5 +38,5 @@ class DinnerPlannerCli::Services::TheDinnerPlannerComImport
 
   private
 
-  attr_reader :filename
+  attr_reader :filename, :path
 end

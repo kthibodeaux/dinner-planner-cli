@@ -1,9 +1,9 @@
 class DinnerPlannerCli::Recipe
-  def self.all
+  def self.all(path:)
     Dir
-      .entries(DinnerPlannerCli.folder)
+      .entries(path)
       .reject { |e| ['.', '..', '.gitkeep'].include?(e) }
-      .map { |e| new(toml: TOML.load_file("#{DinnerPlannerCli.folder}/#{e}")) }
+      .map { |e| new(toml: TOML.load_file("#{path}/#{e}")) }
       .sort_by(&:name)
   end
 

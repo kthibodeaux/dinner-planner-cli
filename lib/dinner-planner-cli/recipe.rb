@@ -11,6 +11,10 @@ class DinnerPlannerCli::Recipe
     @toml = toml
   end
 
+  def text_size
+    toml['text_size']
+  end
+
   def name
     toml['name']
   end

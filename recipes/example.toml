@@ -1,26 +1,33 @@
-name = "Ground Beef Nachos/Tacos"
+name = "Pork and Sausage Gravy"
 category = "Main"
 
 ingredients = [
-  "2lb; Ground Beef",
-  "1; White Onion (diced)",
-  "1; Bell Pepper (diced)",
-  "2; Tbsp Taco Seasoning Mix",
-  "1; 16oz Can Refried Beans",
-  "Diced Pickled Jalapenos",
-  "8oz; Cheddar Cheese (grated)",
-  "8oz; Pepperjack Cheese (grated)",
-  "Tortilla Chips",
-  "Sour Cream",
+  "1lb; Pork Roast (cubed)",
+  "1/2lb; Sausage (sliced)",
+  "1 medium; Yellow Onion (finely chopped)",
+  "1 medium; Bell Pepper (finely chopped)",
+  "2; Celery (stalks - finely chopped)",
+  "1 cup; Green Onion (chopped)",
+  "3; Large Potato (cubed)",
+  "1 Tbsp; Cajun Seasoning",
+  "1 tsp; Kosher Salt",
+  "1 tsp; Black Pepper",
+  "1 tsp; Paprika",
+  "1 tsp; Dried Thyme",
+  "4 cup; Chicken Stock",
 ]
 
 steps = [
-  "Preheat oven to 375.",
-  "Dice bell pepper and set aside.",
-  "Grate cheeses, mix, and set aside.",
-  "Saute onion in skillet then add beef and cook until no pink remains.",
-  "Once the beef is cooked, add the can of refried beans and taco seasoning and stir to combine.",
-  "Once the beans are soft, about 2 minutes, remove from heat.",
-  "Layer chips on a large pan. Add meat/bean mixture to chips, then add the cheese. Finally top with bell pepper and jalapenos.",
-  "Bake until chips are hot and cheese is melted, about 8 minutes.",
+  "Prepare vegetables and set aside",
+  "Brown the pork",
+  "Remove pork from pot and set aside",
+  "Brown white onion, bell pepper, and celery",
+  "Add some chicken stock to pot and deglaze",
+  "Add pork, sausage, green onion, and potatoes to the pot",
+  "Add remaining chicken stock until contents of pot are submerged (about 4 cups, add water to top it off if that is not enough chicken stock)",
+  "Add cajun seasoning, paprika, thyme to pot and bring to a boil",
+  "Once boiling, turn heat to low and cover",
+  "Cook for 1 1/2 to 2 hours on low, stirring frequently.",
+  "Salt and pepper to taste",
+  "Serve over rice",
 ]

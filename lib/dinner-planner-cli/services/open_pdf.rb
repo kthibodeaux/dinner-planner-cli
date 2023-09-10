@@ -23,7 +23,6 @@ class DinnerPlannerCli::Services::OpenPdf
         write_group(pdf, recipe.ingredients, recipe.steps)
 
         recipe.groups.each do |_, group|
-          puts group.inspect
           write_group(pdf, group['ingredients'], group['steps'], group['name'])
         end
       end

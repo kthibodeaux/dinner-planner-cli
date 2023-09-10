@@ -4,7 +4,7 @@ class DinnerPlannerCli::Recipe
   end
 
   def to_pdf
-    Prawn::Document.generate("./temp.pdf") do |pdf|
+    Prawn::Document.generate('./temp.pdf') do |pdf|
       pdf.font_size 20
       pdf.text toml['name']
       pdf.stroke_horizontal_rule
@@ -41,6 +41,6 @@ class DinnerPlannerCli::Recipe
   attr_reader :filename
 
   def toml
-    @toml ||= TOML.load_file("recipes/#{filename}")
+    @toml ||= TOML.load_file(filename)
   end
 end

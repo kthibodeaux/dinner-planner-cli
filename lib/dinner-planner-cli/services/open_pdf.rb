@@ -53,35 +53,31 @@ class DinnerPlannerCli::Services::OpenPdf
     pdf.text recipe.name
     pdf.stroke_horizontal_rule
 
-    write_group(pdf, recipe.text_size, recipe.ingredients, recipe.steps)
+    pdf.font_size recipe.text_size || DEFAULT_TEXT_SIZE
+
+    write_group(pdf, recipe.ingredients, recipe.steps)
 
     recipe.groups.each do |group|
-      write_group(pdf, recipe.text_size, group.ingredients, group.steps, group.name)
+      write_group(pdf, group.ingredients, group.steps, group.name)
     end
   end
 
-  def write_group(pdf, text_size, ingredients, steps, name = nil)
-    ingredients_title = name ? "#{name} Ingredients" : 'Ingredients'
-    steps_title = name ? "#{name} Steps" : 'Steps'
+  def write_group(pdf, ingredients, steps, name = nil)
+    ingredients_title = name || 'Ingredients'
+
+    pdf.move_down 10
 
     if ingredients.any?
-      pdf.move_down 10
-      pdf.font_size text_size || DEFAULT_TEXT_SIZE
       pdf.text ingredients_title, style: :bold
       pdf.move_down 5
-      pdf.font_size text_size || DEFAULT_TEXT_SIZE
       ingredients.each do |ingredient|
-        pdf.text ingredient
+        pdf.text "• #{ingredient}"
       end
+      pdf.move_down 5
     end
 
     return unless steps.any?
 
-    pdf.move_down 10
-    pdf.font_size text_size || DEFAULT_TEXT_SIZE
-    pdf.text steps_title, style: :bold
-    pdf.move_down 5
-    pdf.font_size text_size || DEFAULT_TEXT_SIZE
     steps.each do |step|
       pdf.text step
     end

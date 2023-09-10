@@ -19,23 +19,20 @@ class DinnerPlannerCli::Services::PrintToConsole
   attr_reader :recipe
 
   def write_group(ingredients, steps, name = nil)
-    ingredients_title = name ? "#{name} Ingredients" : 'Ingredients'
-    steps_title = name ? "#{name} Steps" : 'Steps'
+    ingredients_title = name || 'Ingredients'
 
     if ingredients.any?
       puts ''
       puts ingredients_title
 
       ingredients.each do |ingredient|
-        puts "  #{ingredient}"
+        puts "  * #{ingredient}"
       end
     end
 
     return unless steps.any?
 
     puts ''
-
-    puts steps_title
 
     steps.each do |step|
       puts "  #{step}"

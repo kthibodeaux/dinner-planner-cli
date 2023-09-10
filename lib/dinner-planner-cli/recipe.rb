@@ -1,46 +1,39 @@
 class DinnerPlannerCli::Recipe
-  def initialize(filename:)
-    @filename = filename
+  def initialize(toml:)
+    @toml = toml
   end
 
-  def to_pdf
-    Prawn::Document.generate('./temp.pdf') do |pdf|
-      pdf.font_size 20
-      pdf.text toml['name']
-      pdf.stroke_horizontal_rule
+  def name
+    toml['name']
+  end
 
-      if toml['ingredients']
-        pdf.move_down 20
-        pdf.font_size 14
-        pdf.text 'Ingredients'
-        pdf.move_down 5
-        pdf.font_size 12
-        toml['ingredients'].each do |ingredient|
-          pdf.text ingredient.gsub('; ', ' ')
-        end
-      end
+  def ingredients
+    toml['ingredients'].map { |e| e.gsub('; ', ' ') }
+  end
 
-      if toml['steps']
-        pdf.move_down 20
-        pdf.font_size 14
-        pdf.text 'Steps'
-        pdf.move_down 5
-        pdf.font_size 12
-        toml['steps'].each.with_index(1) do |step, index|
-          pdf.text "#{index}. #{step}"
-        end
-      end
+  def steps
+    toml['steps'].map.with_index(1) do |step, index|
+      "#{index}. #{step}"
     end
+  end
 
-    `xdg-open temp.pdf`
-    `rm temp.pdf`
+  def category
+    toml['category']
+  end
+
+  def source
+    toml['source']
+  end
+
+  def needs_sides?
+    toml['needs_sides']
+  end
+
+  def include_in_cookbook?
+    toml['include_in_cookbook']
   end
 
   private
 
-  attr_reader :filename
-
-  def toml
-    @toml ||= TOML.load_file(filename)
-  end
+  attr_reader :toml
 end

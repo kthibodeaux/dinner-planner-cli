@@ -1,5 +1,4 @@
 require 'json'
-require 'ostruct'
 
 class DinnerPlannerCli::Services::TheDinnerPlannerComImport
   def initialize(filename:)

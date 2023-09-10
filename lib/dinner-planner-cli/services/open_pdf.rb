@@ -1,4 +1,9 @@
 class DinnerPlannerCli::Services::OpenPdf
+  CATEGORY_SIZE = 32
+  HEADER_SIZE = 20
+  GROUP_SIZE = 10
+  TEXT_SIZE = 10
+
   def initialize(recipes)
     @recipes = Array(recipes)
   end
@@ -39,20 +44,20 @@ class DinnerPlannerCli::Services::OpenPdf
 
   def write_category(pdf, name)
     pdf.move_down 100
-    pdf.font_size 32
+    pdf.font_size CATEGORY_SIZE
     pdf.text name
     pdf.stroke_horizontal_rule
   end
 
   def write_recipe(pdf, recipe)
-    pdf.font_size 20
+    pdf.font_size HEADER_SIZE
     pdf.text recipe.name
     pdf.stroke_horizontal_rule
 
     write_group(pdf, recipe.ingredients, recipe.steps)
 
-    recipe.groups.each do |_, group|
-      write_group(pdf, group['ingredients'], group['steps'], group['name'])
+    recipe.groups.each do |group|
+      write_group(pdf, group.ingredients, group.steps, group.name)
     end
   end
 
@@ -61,11 +66,11 @@ class DinnerPlannerCli::Services::OpenPdf
     steps_title = name ? "#{name} Steps" : 'Steps'
 
     if ingredients.any?
-      pdf.move_down 20
-      pdf.font_size 14
-      pdf.text ingredients_title
+      pdf.move_down 10
+      pdf.font_size GROUP_SIZE
+      pdf.text ingredients_title, style: :bold
       pdf.move_down 5
-      pdf.font_size 12
+      pdf.font_size TEXT_SIZE
       ingredients.each do |ingredient|
         pdf.text ingredient
       end
@@ -73,11 +78,11 @@ class DinnerPlannerCli::Services::OpenPdf
 
     return unless steps.any?
 
-    pdf.move_down 20
-    pdf.font_size 14
-    pdf.text steps_title
+    pdf.move_down 10
+    pdf.font_size GROUP_SIZE
+    pdf.text steps_title, style: :bold
     pdf.move_down 5
-    pdf.font_size 12
+    pdf.font_size TEXT_SIZE
     steps.each do |step|
       pdf.text step
     end

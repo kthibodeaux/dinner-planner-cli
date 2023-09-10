@@ -17,6 +17,10 @@ OptionParser.new do |parser|
     @task = :cookbook
   end
 
+  parser.on('--count', 'Count how many recipes are in each category') do
+    @task = :count
+  end
+
   parser.on('--import FILENAME', 'Load thedinnerplanner JSON and save each recipe as its own TOML file') do |filename|
     @task = :import
     @filename = filename
@@ -34,4 +38,8 @@ when :cookbook
   DinnerPlannerCli::Services::OpenPdf.new(recipes).process
 when :import
   DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: @filename).process
+when :count
+  DinnerPlannerCli::Recipe.all.group_by(&:category).each do |category, recipes|
+    puts "Category: '#{category}', Recipes: #{recipes.size}"
+  end
 end

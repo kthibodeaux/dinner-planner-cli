@@ -34,7 +34,7 @@ end.parse!
 
 case @task
 when :show
-  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(@filename))
+  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file("#{DinnerPlannerCli.folder}/#{@filename}"))
 
   DinnerPlannerCli::Services::OpenPdf.new(recipe).process
 when :cookbook

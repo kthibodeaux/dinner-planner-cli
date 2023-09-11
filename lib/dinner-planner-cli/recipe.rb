@@ -4,7 +4,7 @@ class DinnerPlannerCli::Recipe
       .entries(path)
       .reject { |e| ['.', '..', '.gitkeep'].include?(e) }
       .map { |e| new(toml: TOML.load_file("#{path}/#{e}")) }
-      .sort_by(&:name)
+      .sort_by { |e| e.name.downcase }
   end
 
   def initialize(toml:)

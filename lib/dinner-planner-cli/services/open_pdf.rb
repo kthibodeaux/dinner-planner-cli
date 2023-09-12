@@ -78,6 +78,8 @@ class DinnerPlannerCli::Services::OpenPdf
 
     return unless steps.any?
 
+    pdf.text name, style: :bold if !ingredients.any? && name
+
     steps.each do |step|
       pdf.text step
     end

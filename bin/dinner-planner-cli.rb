@@ -1,79 +1,52 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../lib'))
 
 require 'dinner-planner-cli'
-require 'optparse'
 
-OptionParser.new do |parser|
-  parser.on('--path PATH', 'Use PATH as the recipes folder') do |path|
-    @path = path
-  end
+case ARGV.first
+when '-h', '--help'
+  puts 'USAGE:'
+  puts '  --pdf FILENAME'
+  puts '    Open FILENAME as a PDF'
 
-  parser.on('--pdf FILENAME', 'Open FILENAME as a PDF') do |filename|
-    @task = :pdf
-    @filename = filename
-  end
+  puts '  --show FILENAME'
+  puts '    Log FILENAME to the console'
 
-  parser.on('--show FILENAME', 'Log FILENAME to the console') do |filename|
-    @task = :show
-    @filename = filename
-  end
+  puts '  --new FILENAME'
+  puts '    Create FILENAME with template and open for editing'
 
-  parser.on('--new FILENAME', 'Create FILENAME with template and open for editing') do |filename|
-    @task = :new
-    @filename = filename
-  end
+  puts '  --cookbook PATH'
+  puts '    Open all applicable recipes in one PDF'
 
-  parser.on('--cookbook', 'Open all applicable recipes in one PDF. Requires --path') do
-    @task = :cookbook
-  end
+  puts '  --count PATH'
+  puts '    Count the number of recipes in each category'
 
-  parser.on('--count', 'Count how many recipes are in each category. Requires --path') do
-    @task = :count
-  end
+  puts '  --list CATEGORY PATH'
+  puts '    List the recipes in each CATEGORY in PATH'
 
-  parser.on('--list CATEGORY', 'List recipes for the given category. Requires --path') do |category|
-    @task = :list
-    @category = category
-  end
-
-  parser.on('--import FILENAME',
-            'Load thedinnerplanner JSON and save each recipe as its own TOML file. Requires --path') do |filename|
-    @task = :import
-    @filename = filename
-  end
-end.parse!
-
-case @task
-when :pdf
-  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(@filename))
+  puts '  --import FILENAME PATH'
+  puts '    Load thedinnerplanner JSON and save each recipe as its own TOML file in PATH'
+when '--pdf'
+  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 
   DinnerPlannerCli::Services::OpenPdf.new(recipe).process
-when :show
-  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(@filename))
+when '--show'
+  recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 
   DinnerPlannerCli::Services::PrintToConsole.new(recipe).process
-when :cookbook
-  raise '--path is required' unless @path
-
-  recipes = DinnerPlannerCli::Recipe.all(path: @path).select(&:include_in_cookbook?)
+when '--cookbook'
+  recipes = DinnerPlannerCli::Recipe.all(path: ARGV[1]).select(&:include_in_cookbook?)
 
   DinnerPlannerCli::Services::OpenPdf.new(recipes).process
-when :import
-  raise '--path is required' unless @path
-
-  DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: @filename, path: @path).process
-when :count
-  raise '--path is required' unless @path
-
-  DinnerPlannerCli::Recipe.all(path: @path).group_by(&:category).each do |category, recipes|
+when '--import'
+  DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: ARGV[1], path: ARGV[2]).process
+when '--count'
+  DinnerPlannerCli::Recipe.all(path: ARGV[1]).group_by(&:category).each do |category, recipes|
     puts "Category: '#{category}', Recipes: #{recipes.size}"
   end
-when :list
-  raise '--path is required' unless @path
-
-  DinnerPlannerCli::Recipe.all(path: @path).select { |e| e.category.downcase == @category.downcase }.each do |recipe|
+when '--list'
+  DinnerPlannerCli::Recipe.all(path: ARGV[2]).select { |e| e.category.downcase == ARGV[1].downcase }.each do |recipe|
     puts recipe.name
   end
-when :new
-  DinnerPlannerCli::Services::NewRecipe.new(filename: @filename).process
+when '--new'
+  DinnerPlannerCli::Services::NewRecipe.new(filename: ARGV[1]).process
 end

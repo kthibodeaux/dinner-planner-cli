@@ -49,6 +49,12 @@ class DinnerPlannerCli::Recipe
     end
   end
 
+  def all_ingredients
+    a = Array(toml['ingredients'])
+    b = Array(toml['groups']).map(&:last).map { |e| Array(e['ingredients']) }
+    (a + b).flatten
+  end
+
   private
 
   attr_reader :toml

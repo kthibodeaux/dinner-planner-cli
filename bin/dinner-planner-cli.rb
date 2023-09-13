@@ -49,4 +49,6 @@ when '--list'
   end
 when '--new'
   DinnerPlannerCli::Services::NewRecipe.new(filename: ARGV[1]).process
+when '--shopping-list'
+  DinnerPlannerCli::Services::ShoppingList.new(filenames: ARGV[1..]).process
 end

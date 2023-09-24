@@ -1,9 +1,9 @@
 require 'json'
 
 class DinnerPlannerCli::Services::TheDinnerPlannerComImport
-  def initialize(filename:, path:)
+  def initialize(filename:)
     @filename = filename
-    @path = path
+    @path = Dir.pwd
   end
 
   def process

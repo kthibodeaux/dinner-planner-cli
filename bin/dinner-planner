@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../lib'))
 require 'dinner-planner-cli'
 
 case ARGV.first
-when '-h', '--help'
+when '-h', '--help', '', nil
   puts 'USAGE:'
   puts '  --html FILENAME'
   puts '    Open FILENAME as an HTML document'

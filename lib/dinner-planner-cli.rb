@@ -1,6 +1,5 @@
 require 'erb'
 require 'ostruct'
-require 'prawn'
 require 'toml'
 
 module DinnerPlannerCli

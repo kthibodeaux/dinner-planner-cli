@@ -13,7 +13,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_runtime_dependency 'matrix', '~> 0.4'
-  spec.add_runtime_dependency 'prawn'
   spec.add_runtime_dependency 'toml'
 
   spec.add_development_dependency 'bundler', '~> 2.3'

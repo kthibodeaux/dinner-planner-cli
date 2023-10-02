@@ -2,7 +2,8 @@ class DinnerPlannerCli::Recipe
   def self.all
     Dir
       .entries(Dir.pwd)
-      .reject { |e| ['.', '..', 'fonts', 'config.toml'].include?(e) }
+      .select { |e| e.end_with?('.toml') }
+      .reject { |e| ['config.toml'].include?(e) }
       .map { |e| new(toml: TOML.load_file("#{Dir.pwd}/#{e}")) }
       .sort_by { |e| e.name.downcase }
   end

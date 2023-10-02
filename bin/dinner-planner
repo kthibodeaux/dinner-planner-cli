@@ -6,8 +6,8 @@ require 'dinner-planner-cli'
 case ARGV.first
 when '-h', '--help'
   puts 'USAGE:'
-  puts '  --pdf FILENAME'
-  puts '    Open FILENAME as a PDF'
+  puts '  --html FILENAME'
+  puts '    Open FILENAME as an HTML document'
 
   puts '  --show FILENAME'
   puts '    Log FILENAME to the console'
@@ -26,10 +26,10 @@ when '-h', '--help'
 
   puts '  --import FILENAME'
   puts '    Load thedinnerplanner JSON and save each recipe as its own TOML file'
-when '--pdf'
+when '--html'
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 
-  DinnerPlannerCli::Services::OpenPdf.new(recipe).process
+  DinnerPlannerCli::Services::OpenHtml.new(recipe).process
 when '--show'
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 

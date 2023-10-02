@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = 'dinner-planner-cli'
   spec.summary       = 'A command line recipe manager, dinner planner, and shopping list generator.'
-  spec.version       = '0.0.2'
+  spec.version       = '0.0.3'
   spec.authors       = ['Keith Thibodeaux']
   spec.licenses      = %w[MIT]
 

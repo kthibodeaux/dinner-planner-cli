@@ -41,13 +41,7 @@ class DinnerPlannerCli::Recipe
   end
 
   def groups
-    Array(toml['groups']).map do |_, group|
-      OpenStruct.new({
-                       name: group['name'],
-                       ingredients: ingredients_for(group['ingredients']),
-                       steps: steps_for(group['steps'])
-                     })
-    end
+    [default_group, named_groups].flatten
   end
 
   def all_ingredients
@@ -60,13 +54,29 @@ class DinnerPlannerCli::Recipe
 
   attr_reader :toml
 
+  def default_group
+    OpenStruct.new({
+                     name: nil,
+                     ingredients: ingredients,
+                     steps: steps
+                   })
+  end
+
+  def named_groups
+    Array(toml['groups']).map do |_, group|
+      OpenStruct.new({
+                       name: group['name'],
+                       ingredients: ingredients_for(group['ingredients']),
+                       steps: steps_for(group['steps'])
+                     })
+    end
+  end
+
   def ingredients_for(raw_array)
     Array(raw_array).map { |e| e.gsub('; ', ' ') }
   end
 
   def steps_for(raw_array)
-    Array(raw_array).map.with_index(1) do |step, index|
-      "#{index}. #{step}"
-    end
+    Array(raw_array)
   end
 end

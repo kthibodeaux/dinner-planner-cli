@@ -6,8 +6,8 @@ require 'dinner-planner-cli'
 case ARGV.first
 when '-h', '--help'
   puts 'USAGE:'
-  puts '  --pdf FILENAME'
-  puts '    Open FILENAME as a PDF'
+  puts '  --html FILENAME'
+  puts '    Open FILENAME as an HTML document'
 
   puts '  --show FILENAME'
   puts '    Log FILENAME to the console'
@@ -16,7 +16,7 @@ when '-h', '--help'
   puts '    Create FILENAME with template and open for editing'
 
   puts '  --cookbook'
-  puts '    Open all applicable recipes in one PDF'
+  puts '    Open all applicable recipes in one HTML document'
 
   puts '  --count'
   puts '    Count the number of recipes in each category'
@@ -26,10 +26,10 @@ when '-h', '--help'
 
   puts '  --import FILENAME'
   puts '    Load thedinnerplanner JSON and save each recipe as its own TOML file'
-when '--pdf'
+when '--html'
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 
-  DinnerPlannerCli::Services::OpenPdf.new(recipe).process
+  DinnerPlannerCli::Services::OpenHtml.new(recipe).process
 when '--show'
   recipe = DinnerPlannerCli::Recipe.new(toml: TOML.load_file(ARGV[1]))
 
@@ -37,7 +37,7 @@ when '--show'
 when '--cookbook'
   recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
 
-  DinnerPlannerCli::Services::OpenPdf.new(recipes).process
+  DinnerPlannerCli::Services::OpenHtml.new(recipes).process
 when '--import'
   DinnerPlannerCli::Services::TheDinnerPlannerComImport.new(filename: ARGV[1]).process
 when '--count'

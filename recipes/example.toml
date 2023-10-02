@@ -2,8 +2,8 @@ name = "Generic Dinner"
 category = "Main"
 include_in_cookbook = true
 source = "My Great Cookbook p.12"
-# default text size is 12, but can be set like so:
-# text_size = 10
+# text_size is in `em`. default is `1`
+# text_size = 0.9
 
 ingredients = [
   "Ingredients can be input here",

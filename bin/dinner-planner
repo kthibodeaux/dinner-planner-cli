@@ -15,8 +15,11 @@ when '-h', '--help'
   puts '  --new FILENAME'
   puts '    Create FILENAME with template and open for editing'
 
-  puts '  --cookbook'
+  puts '  --cookbook-pdf'
   puts '    Open all applicable recipes in one PDF'
+
+  puts '  --cookbook'
+  puts '    Open all applicable recipes in one HTML document'
 
   puts '  --count'
   puts '    Count the number of recipes in each category'
@@ -35,6 +38,10 @@ when '--show'
 
   DinnerPlannerCli::Services::PrintToConsole.new(recipe).process
 when '--cookbook'
+  recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
+
+  DinnerPlannerCli::Services::OpenHtml.new(recipes).process
+when '--cookbook-pfd'
   recipes = DinnerPlannerCli::Recipe.all.select(&:include_in_cookbook?)
 
   DinnerPlannerCli::Services::OpenPdf.new(recipes).process

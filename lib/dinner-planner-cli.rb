@@ -1,9 +1,14 @@
+require 'erb'
 require 'ostruct'
 require 'prawn'
 require 'toml'
 
 module DinnerPlannerCli
   module Services; end
+
+  def self.template_directory
+    File.expand_path('../templates', File.dirname(__FILE__))
+  end
 
   def self.config
     DinnerPlannerCli.create_empty_config unless File.exist?('config.toml')

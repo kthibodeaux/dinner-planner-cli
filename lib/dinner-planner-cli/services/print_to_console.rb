@@ -7,8 +7,6 @@ class DinnerPlannerCli::Services::PrintToConsole
     puts recipe.name
     puts '-' * 80
 
-    write_group(recipe.ingredients, recipe.steps)
-
     recipe.groups.each do |group|
       write_group(group.ingredients, group.steps, group.name)
     end

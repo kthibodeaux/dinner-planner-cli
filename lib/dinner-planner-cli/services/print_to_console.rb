@@ -8,7 +8,7 @@ class DinnerPlannerCli::Services::PrintToConsole
     puts '-' * 80
 
     recipe.groups.each do |group|
-      write_group(group.ingredients, group.steps, group.name)
+      write_group(group.ingredients, group.steps, group.notes, group.name)
     end
   end
 
@@ -16,7 +16,7 @@ class DinnerPlannerCli::Services::PrintToConsole
 
   attr_reader :recipe
 
-  def write_group(ingredients, steps, name = nil)
+  def write_group(ingredients, steps, notes, name = nil)
     ingredients_title = name || 'Ingredients'
 
     if ingredients.any?
@@ -28,12 +28,19 @@ class DinnerPlannerCli::Services::PrintToConsole
       end
     end
 
-    return unless steps.any?
+    if steps.any?
+      puts ''
+      puts 'Steps:'
+
+      steps.each do |step|
+        puts "  #{step}"
+      end
+    end
+
+    return if notes.empty?
 
     puts ''
-
-    steps.each do |step|
-      puts "  #{step}"
-    end
+    puts 'Notes:'
+    puts "  #{notes}"
   end
 end

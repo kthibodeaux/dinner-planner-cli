@@ -24,6 +24,10 @@ class DinnerPlannerCli::Recipe
     ingredients_for(toml['ingredients'])
   end
 
+  def notes
+    toml['notes'].to_s
+  end
+
   def steps
     steps_for(toml['steps'])
   end
@@ -58,7 +62,8 @@ class DinnerPlannerCli::Recipe
     OpenStruct.new({
                      name: nil,
                      ingredients: ingredients,
-                     steps: steps
+                     steps: steps,
+                     notes: notes
                    })
   end
 
@@ -67,7 +72,8 @@ class DinnerPlannerCli::Recipe
       OpenStruct.new({
                        name: group['name'],
                        ingredients: ingredients_for(group['ingredients']),
-                       steps: steps_for(group['steps'])
+                       steps: steps_for(group['steps']),
+                       notes: group['notes'].to_s
                      })
     end
   end

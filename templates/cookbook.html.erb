@@ -43,6 +43,16 @@
       column-break-inside: avoid;
       -webkit-column-break-inside: avoid;
     }
+
+
+    div.notes {
+      font-style: italic;
+      padding: 2px 0px 15px 0px;
+    }
+
+    div.notes:empty {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -78,6 +88,9 @@
                 <% end %>
               </ol>
             <% end %>
+            <div class="notes">
+              <%= group.notes %>
+            </div>
           <% end %>
         </div>
       </div>
